@@ -1,0 +1,40 @@
+# Entorno virtual
+venv/
+.env
+.env.*
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos temporales
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+
+# Archivos de test/coverage
+.coverage
+.tox/
+.pytest_cache/
+
+# Configuración de IDEs
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de distribución / build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Archivos de configuración local
+*.local
