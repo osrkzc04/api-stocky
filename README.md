@@ -18,7 +18,7 @@ API desarrollada con **FastAPI** y **PostgreSQL**, siguiendo buenas prácticas:
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/usuario/nombre-del-proyecto.git
+git clone https://github.com/osrkzc04/api-stocky
 cd nombre-del-proyecto
 ```
 
@@ -69,18 +69,6 @@ La API estará disponible en:
 - **Swagger UI:** http://localhost:8000/docs
 - **ReDoc:** http://localhost:8000/redoc
 
-## Paginación del lado del servidor
-
-Ejemplo de uso en el endpoint `/marcas`:
-
-```
-GET /marcas?skip=0&limit=10
-```
-
-Parámetros:
-- `skip`: número de registros a omitir
-- `limit`: número máximo de registros a devolver (máximo 100)
-
 ## Comandos útiles
 
 ### Exportar dependencias actuales
@@ -105,4 +93,4 @@ find . -type d -name "__pycache__" -exec rm -r {} +
 ## Autor
 
 **Oscar Gualoto**
-[LinkedIn](https://www.linkedin.com/) · [Portafolio](https://tusitio.com)
+**Fernando Quiguantar**
