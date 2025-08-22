@@ -1,22 +1,26 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
-class UsuarioCreate(BaseModel):
+class UsuarioBase(BaseModel):
     nombre: str
     correo: EmailStr
     contrasena: str
     rol: str
 
-class UsuarioResponse(BaseModel):
-    id_usuario: int
-    nombre: str
-    correo: EmailStr
-    rol: str
-    creado_en: datetime
+class UsuarioCreate(UsuarioBase):
+    pass
+class UsuarioUpdate(BaseModel):
+    nombre: str | None = None
+    correo: EmailStr | None = None
+    contrasena: str | None = None
+    rol: str | None = None
 
-    model_config = {
-        "from_attributes": True
-    }
+class UsuarioResponse(UsuarioBase):
+    id_usuario: int
+    creado_en: datetime | None = None
+
+    class Config:
+        from_attributes = True
 
 class LoginRequest(BaseModel):
     correo: EmailStr

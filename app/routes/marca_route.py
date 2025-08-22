@@ -1,39 +1,40 @@
-from fastapi import APIRouter, Depends
+from typing import List
+from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
+
 from app.core.database import db
-from app.schemas.marca_schema import MarcaResponse
+from app.schemas.marca_schema import MarcaCreate, MarcaResponse, MarcaUpdate
+from app.services.marca_service import (
+    crear_marca, listar_marca, obtener_marca_por_id,
+    actualizar_marca, eliminar_marca
+)
 
 router = APIRouter(prefix="/marca", tags=["Marca"])
 
 def get_db():
-    db_session = db.SessionLocal()
+    session: Session = db.SessionLocal()
     try:
-        yield db_session
+        yield session
     finally:
-        db_session.close()
+        session.close()
 
-@router.post("/", response_model=MarcaResponse)
-def crear_marca(nombre: str, db: Session = Depends(get_db)):
-    from app.services.marca_service import crear_marca
-    return crear_marca(db, nombre)
+@router.post("/", response_model=MarcaResponse, status_code=status.HTTP_201_CREATED)
+def crear(data: MarcaCreate, session: Session = Depends(get_db)):
+    return crear_marca(session, data)
 
-@router.get("/", response_model=list[MarcaResponse])
-def obtener_todas_marcas(db: Session = Depends(get_db)):
-    from app.services.marca_service import obtener_todas_marcas
-    return obtener_todas_marcas(db)
+@router.get("/", response_model=List[MarcaResponse])
+def listar(session: Session = Depends(get_db)):
+    return listar_marca(session)
 
 @router.get("/{id_marca}", response_model=MarcaResponse)
-def obtener_marca(id_marca: int, db: Session = Depends(get_db)):
-    from app.services.marca_service import obtener_marca_por_id
-    return obtener_marca_por_id(db, id_marca)   
+def obtener(id_marca: int, session: Session = Depends(get_db)):
+    return obtener_marca_por_id(session, id_marca)
 
 @router.put("/{id_marca}", response_model=MarcaResponse)
-def actualizar_marca(id_marca: int, nombre: str, db: Session = Depends(get_db)):
-    from app.services.marca_service import actualizar_marca
-    return actualizar_marca(db, id_marca, nombre)
+def actualizar(id_marca: int, data: MarcaUpdate, session: Session = Depends(get_db)):
+    return actualizar_marca(session, id_marca, data)
 
-@router.delete("/{id_marca}")
-def eliminar_marca(id_marca: int, db: Session = Depends(get_db)):
-    from app.services.marca_service import eliminar_marca
-    return eliminar_marca(db, id_marca)
-
+@router.delete("/{id_marca}", status_code=status.HTTP_204_NO_CONTENT)
+def eliminar(id_marca: int, session: Session = Depends(get_db)):
+    eliminar_marca(session, id_marca)
+    return None

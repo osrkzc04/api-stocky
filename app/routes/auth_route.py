@@ -17,5 +17,5 @@ def get_db():
 @router.post("/login", response_model=TokenResponse)
 def login(datos: LoginRequest, db: Session = Depends(get_db)):
     usuario = autenticar_usuario(db, datos.correo, datos.contrasena)
-    token = create_access_token({"sub": usuario.correo, "id": usuario.id_usuario, "rol": usuario.rol})
+    token = create_access_token({"sub": usuario.correo, "id": usuario.id_usuario, "rol": usuario.rol,"name": usuario.nombre})
     return {"access_token": token, "token_type": "bearer"}

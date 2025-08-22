@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from app.core.database import Base # Asegúrate de tener esta Base compartida
+from app.core.database import Base
 
 class Marca(Base):
     __tablename__ = "marca"

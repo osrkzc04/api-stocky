@@ -1,4 +1,6 @@
 from sqlalchemy import Column, DateTime, Integer, String, TIMESTAMP, func
+from sqlalchemy.orm import relationship
+
 from app.core.database import Base
 
 class Usuario(Base):
@@ -10,3 +12,5 @@ class Usuario(Base):
     contrasena = Column(String(100), nullable=False)
     rol = Column(String(10), nullable=False)
     creado_en = Column(DateTime(timezone=True), server_default=func.now())
+
+    kardex = relationship("Kardex", back_populates="usuario")

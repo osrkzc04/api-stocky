@@ -1,12 +1,16 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-class MarcaCreate(BaseModel):
-    nombre: str
+class MarcaBase(BaseModel):
+    nombre: str = Field(..., max_length=100)
 
-class MarcaResponse(BaseModel):
+class MarcaCreate(MarcaBase):
+    pass
+
+class MarcaUpdate(BaseModel):
+    nombre: str | None = Field(None, max_length=100)
+
+class MarcaResponse(MarcaBase):
     id_marca: int
-    nombre: str
 
-    model_config = {
-        "from_attributes": True
-    }
+    class Config:
+        from_attributes = True

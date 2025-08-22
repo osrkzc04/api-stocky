@@ -23,7 +23,7 @@ def obtener_usuario_por_id(db: Session, id_usuario: int) -> Usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return usuario
 
-def obtener_todos_usuarios(db: Session):
+def listar_usuarios(db: Session):
     return db.query(Usuario).all()
 
 def actualizar_usuario(db: Session, id_usuario: int, usuario: UsuarioCreate):
@@ -36,8 +36,13 @@ def actualizar_usuario(db: Session, id_usuario: int, usuario: UsuarioCreate):
     db.refresh(db_usuario)
     return db_usuario
 
+def eliminar_usuario(db: Session, id_usuario: int):
+    usuario = obtener_usuario_por_id(db, id_usuario)
+    db.delete(usuario)
+    db.commit()
+
 def autenticar_usuario(db: Session, correo: str, contrasena: str) -> Usuario:
     usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
     if not usuario or not verify_password(contrasena, usuario.contrasena):
-        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+        raise HTTPException(status_code=404, detail="Credenciales inválidas")
     return usuario
