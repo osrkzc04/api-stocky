@@ -26,7 +26,7 @@ cd nombre-del-proyecto
 
 #### Windows (PowerShell)
 ```powershell
-python -m venv venv
+python -m venv .venv
 .
 env\Scripts ctivate
 ```
